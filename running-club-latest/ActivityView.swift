@@ -54,7 +54,20 @@ struct ActivityView: View {
             .listStyle(.plain)
             .navigationTitle("Activity")
             .toolbar {
-                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(role: .destructive) {
+                        Task {
+                            do {
+                                try await AuthService.shared.logout()
+                            } catch {
+                                print(error.localizedDescription)
+                            }
+                        } label: {
+                            Text("Logout")
+                                .foregroundStyle(.red)
+                        }
+                    }
+                }
             }
             .onAppear {
                 Task {
