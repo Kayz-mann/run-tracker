@@ -1,24 +1,23 @@
 //
 //  ContentView.swift
-//  running-club-latest
+//  run-tracker
 //
-//  Created by Balogun Kayode on 25/04/2025.
+//  Created by Balogun Kayode on 18/03/2025.
 //
 
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var authService: AuthService
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        if authService.isAuthenticated {
+            AppTabView()
+        } else {
+            LoginView()
         }
-        .padding()
     }
 }
-
+ 
 #Preview {
     ContentView()
 }

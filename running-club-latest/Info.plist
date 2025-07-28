@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.running-club-latest</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.681494952570-q6mqufmfr6f97p3d9l9i4758fljv9h5k</string>
+			</array>
+		</dict>
+	</array>
+	<key>GIDClientID</key>
+	<string>681494952570-q6mqufmfr6f97p3d9l9i4758fljv9h5k.apps.googleusercontent.com</string>
+</dict>
+</plist>
