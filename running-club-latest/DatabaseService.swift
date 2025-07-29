@@ -47,8 +47,8 @@ final class DatabaseService {
         print("Saved to db")
     }
     
-    func fetchWorkouts() async throws -> [RunPayload] {
-        return try await supabase.from(Table.workouts.rawValue).select().execute().value
+    func fetchWorkouts(for userId: UUID) async throws -> [RunPayload] {
+        return try await supabase.from(Table.workouts.rawValue).select().in("user_id", values: [userId]).execute().value
     }
     
     

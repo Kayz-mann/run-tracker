@@ -19,6 +19,7 @@ class RunTracker: NSObject, ObservableObject {
     @Published var pace  = 0.0
     @Published var elapsedTime = 0
     private var timer: Timer?
+    private var startTime =  Date.now
     
     @Published var region =  MKCoordinateRegion(center: .init(latitude: 40.7120, longitude: 16.0060), span: .init(latitudeDelta: 0.01, longitudeDelta: 0.01))
     
@@ -89,6 +90,8 @@ class RunTracker: NSObject, ObservableObject {
         isRunning =  false
         presentPauseView =  false
         postToDB()
+        postToHealthStore()
+        startTime = .now
     }
     
     func postToDB() {
@@ -112,6 +115,26 @@ class RunTracker: NSObject, ObservableObject {
         locationManager?.stopUpdatingLocation()
         timer?.invalidate()
         timer = nil
+    }
+    
+    func postToHealthStore() {
+        Task {
+            do {
+                try await HealthManager.shared.addWorkout(startDate: startTime, endDate: .now, duration: Double(elapsedTime), distance: distance, kCalBurned: calculateKCalBurned())
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func calculateKCalBurned() -> Double {
+        let weight: Double =  80
+        let duration: Double =  Double(elapsedTime) / (60*60)
+        let kilos =  distance / 1000
+        let met = (1.57) * (kilos/duration) - 3.15
+        print("values",weight, duration, met)
+        return met * weight * duration
+        
     }
 }
 

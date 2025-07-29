@@ -20,7 +20,7 @@ struct AreaMap: View {
             }
         )
         if #available(macOS 11.0, *) {
-            return Map(coordinateRegion: binding, showsUserLocation: true).ignoresSafeArea()
+            return Map(coordinateRegion: binding, showsUserLocation: true).ignoresSafeArea(.all, edges: .top)
         } else {
             // Fallback on earlier versions
         }

@@ -20,7 +20,7 @@ struct ActivityView: View {
                         ActivityItemView(run: run)
                     } label: {
                         VStack (alignment: .leading){
-                            Text("Morning  Run")
+                            Text(run.createdAt.timeOfDayString())
                                 .font(.title3)
                                 .bold()
                             Text(run.createdAt.formattedDate())
@@ -36,7 +36,7 @@ struct ActivityView: View {
                                     Text("Pace")
                                         .font(.caption)
                                     
-                                    Text("\(Int(run.pace).convertDurationToString()) km")
+                                    Text("\(Int(run.pace, specifier : "%.2f")) mins")
                                 }
                                 
                                 VStack {
@@ -72,7 +72,8 @@ struct ActivityView: View {
             .onAppear {
                 Task {
                     do {
-                        activities =  try await DatabaseService.shared.fetchWorkouts()
+                        guard let userId =  AuthService.shared.currentSession?.user.id else {return}
+                        activities =  try await DatabaseService.shared.fetchWorkouts(for: userId)
                         
                         activities.sort(by: {$0.createdAt >= $1.createdAt})
                     } catch {
